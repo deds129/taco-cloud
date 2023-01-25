@@ -34,19 +34,21 @@
 	<h3>Here’s how I’ll pay...</h3>
 	<label for="ccNumber">Credit Card #: </label>
 	<input type="text" th:field="*{ccNumber}"/>
-	<span class="validationError"
-		  th:if="${#fields.hasErrors('ccNumber')}"
-		  th:errors="*{ccNumber}">CC Num Error</span>
 	<br/>
 	<label for="ccExpiration">Expiration: </label>
 	<input type="text" th:field="*{ccExpiration}"/>
 	<br/>
 	<label for="ccCVV">CVV: </label>
 	<input type="text" th:field="*{ccCVV}"/>
-	<span class="validationError"
-		  th:if="${#fields.hasErrors('ccCVV')}"
-		  th:errors="*{ccCVV}">Invalid CVV</span>
 	<br/>
+	
+	<br>
+	<div th:if="${#fields.hasAnyErrors()}">
+		<ul>
+			<li th:each="err : ${#fields.allErrors()}" th:text="${err}" style="color: red" />
+		</ul>
+	</div>
+	</br>
 	<input type="submit" value="Submit Order"/>
 </form>
 </body>
