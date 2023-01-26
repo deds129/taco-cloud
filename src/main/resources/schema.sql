@@ -36,7 +36,6 @@ alter table Taco
 
 ALTER TABLE Ingredient
     ADD PRIMARY KEY (ID);
-
  
 alter table Ingredient_Ref
     add foreign key (ingredient) references Ingredient (id);

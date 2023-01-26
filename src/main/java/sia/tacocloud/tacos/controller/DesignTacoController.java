@@ -1,7 +1,7 @@
 package sia.tacocloud.tacos.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,23 +18,18 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("tacoOrder")
+@RequiredArgsConstructor
 public class DesignTacoController {
 	
 	private final IngredientRepository ingredientRepository;
-	
-	@Autowired
-	public DesignTacoController(
-			IngredientRepository ingredientRepository) {
-		this.ingredientRepository = ingredientRepository;
-	}
-	
+
 	@ModelAttribute
 	public void addIngredientsToModel(Model model) {
-		Iterable<Ingredient> ingredients = ingredientRepository.findAll();
+		Iterable<Ingredient> all = ingredientRepository.findAll();
 		Type[] types = Ingredient.Type.values();
 		for (Type type : types) {
 			model.addAttribute(type.toString().toLowerCase(),
-					filterByType((List<Ingredient>) ingredients, type));
+					filterByType((List<Ingredient>) all, type));
 
 		}
 	}

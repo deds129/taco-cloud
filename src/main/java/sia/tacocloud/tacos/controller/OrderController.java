@@ -13,6 +13,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import sia.tacocloud.tacos.model.TacoOrder;
 import sia.tacocloud.tacos.repository.OrderRepository;
 
+import java.util.Date;
+
 @Slf4j
 @Controller
 @RequestMapping("/orders")
@@ -36,6 +38,7 @@ public class OrderController {
 		if (errors.hasErrors()) {
 			return "orderForm";
 		}
+		order.setPlacedAt(new Date());
 		orderRepo.save(order);
 		sessionStatus.setComplete();
 		return "redirect:/";
