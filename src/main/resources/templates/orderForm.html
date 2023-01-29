@@ -41,11 +41,11 @@
 	<label for="ccCVV">CVV: </label>
 	<input type="text" th:field="*{ccCVV}"/>
 	<br/>
-	
+
 	<br>
 	<div th:if="${#fields.hasAnyErrors()}">
 		<ul>
-			<li th:each="err : ${#fields.allErrors()}" th:text="${err}" style="color: red" />
+			<li th:each="err : ${#fields.allErrors()}" th:text="${err}" style="color: red"/>
 		</ul>
 	</div>
 	</br>
