@@ -1,5 +1,8 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:tacocloud;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-  generate-unique-name: false
-  name: tacocloud
+  cassandra:
+    keyspace-name: tacocloud
+    local-datacenter: datacenter1
+    schema-action: create_if_not_exists
+    connection:
+      connect-timeout: 10s
+      init-query-timeout: 10s

@@ -1,14 +1,18 @@
 package sia.tacocloud.tacos.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import sia.tacocloud.tacos.model.Ingredient;
 import sia.tacocloud.tacos.model.Ingredient.Type;
 import sia.tacocloud.tacos.model.Taco;
 import sia.tacocloud.tacos.model.TacoOrder;
+import sia.tacocloud.tacos.model.TacoUDT;
 import sia.tacocloud.tacos.repository.IngredientRepository;
 
 import java.util.List;
@@ -21,7 +25,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DesignTacoController {
 	
-	private final IngredientRepository ingredientRepository;
+	private IngredientRepository ingredientRepository;
+
+	@Autowired
+	public DesignTacoController(IngredientRepository ingredientRepository) {
+		this.ingredientRepository = ingredientRepository;
+	}
 
 	@ModelAttribute
 	public void addIngredientsToModel(Model model) {
@@ -38,10 +47,12 @@ public class DesignTacoController {
 	public TacoOrder order() {
 		return new TacoOrder();
 	}
+	
 	@ModelAttribute(name = "taco")
 	public Taco taco() {
 		return new Taco();
 	}
+	
 	@GetMapping
 	public String showDesignForm() {
 		return "design";
@@ -55,9 +66,20 @@ public class DesignTacoController {
 	}
 
 	@PostMapping
-	public String processTaco(Taco taco,
+	public String processTaco(@Valid Taco taco, Errors errors,
 							  @ModelAttribute TacoOrder tacoOrder) {
-		tacoOrder.addTaco(taco);
+		
+		TacoUDT tacoUDT = TacoUDT.builder()
+				.name(taco.getName())
+				.ingredients(taco.getIngredients())
+				.build();
+		
+		tacoOrder.addTaco(tacoUDT);
+
+		if (errors.hasErrors()) {
+			return "design";
+		}
+		
 		log.info("Processing taco: {}", taco);
 		return "redirect:/orders/current";
 	}

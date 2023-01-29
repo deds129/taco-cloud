@@ -54,6 +54,13 @@
 	<div>
 		<h3>Name your taco creation:</h3>
 		<input type="text" th:field="*{name}"/>
+		<br>
+		<div th:if="${#fields.hasAnyErrors()}">
+			<ul>
+				<li th:each="err : ${#fields.allErrors()}" th:text="${err}" style="color: red" />
+			</ul>
+		</div>
+		</br>
 		<br/>
 		<button>Submit Your Taco</button>
 	</div>
