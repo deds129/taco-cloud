@@ -1,17 +1,19 @@
 package sia.tacocloud.tacos.data;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import sia.tacocloud.tacos.model.*;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import sia.tacocloud.tacos.model.Ingredient;
+import sia.tacocloud.tacos.model.Taco;
+import sia.tacocloud.tacos.model.TacoOrder;
 import sia.tacocloud.tacos.repository.OrderRepository;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static sia.tacocloud.tacos.model.Ingredient.*;
+import static sia.tacocloud.tacos.model.Ingredient.Type;
 
-@Disabled
+@DataMongoTest
 public class OrderRepositoryTests {
 
 	@Autowired
@@ -33,13 +35,13 @@ public class OrderRepositoryTests {
 		taco1.addIngredient(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
 		taco1.addIngredient(new Ingredient("GRBF", "Ground Beef", Type.PROTEIN));
 		taco1.addIngredient(new Ingredient("CHED", "Shredded Cheddar", Type.CHEESE));
-		order.addTaco(TacoUDRUtils.toTacoUDT(taco1));
+		order.addTaco(taco1);
 		Taco taco2 = new Taco();
 		taco2.setName("Taco Two");
 		taco2.addIngredient(new Ingredient("COTO", "Corn Tortilla", Type.WRAP));
 		taco2.addIngredient(new Ingredient("CARN", "Carnitas", Type.PROTEIN));
 		taco2.addIngredient(new Ingredient("JACK", "Monterrey Jack", Type.CHEESE));
-		order.addTaco(TacoUDRUtils.toTacoUDT(taco2));
+		order.addTaco(taco2);
 
 		TacoOrder savedOrder = orderRepo.save(order);
 		assertThat(savedOrder.getId()).isNotNull();
@@ -54,9 +56,10 @@ public class OrderRepositoryTests {
 		assertThat(fetchedOrder.getCcExpiration()).isEqualTo("10/23");
 		assertThat(fetchedOrder.getCcCVV()).isEqualTo("123");
 		assertThat(fetchedOrder.getPlacedAt().getTime()).isEqualTo(savedOrder.getPlacedAt().getTime());
-		List<TacoUDT> tacos = fetchedOrder.getTacos();
+		List<Taco> tacos = fetchedOrder.getTacos();
 		assertThat(tacos.size()).isEqualTo(2);
-		assertThat(tacos).containsExactlyInAnyOrder(TacoUDRUtils.toTacoUDT(taco1), TacoUDRUtils.toTacoUDT(taco2));
+		assertThat(tacos).containsExactlyInAnyOrder(taco1, taco2);
 	}
 
 }
+

@@ -12,7 +12,6 @@ import sia.tacocloud.tacos.model.Ingredient;
 import sia.tacocloud.tacos.model.Ingredient.Type;
 import sia.tacocloud.tacos.model.Taco;
 import sia.tacocloud.tacos.model.TacoOrder;
-import sia.tacocloud.tacos.model.TacoUDT;
 import sia.tacocloud.tacos.repository.IngredientRepository;
 
 import java.util.List;
@@ -69,12 +68,7 @@ public class DesignTacoController {
 	public String processTaco(@Valid Taco taco, Errors errors,
 							  @ModelAttribute TacoOrder tacoOrder) {
 		
-		TacoUDT tacoUDT = TacoUDT.builder()
-				.name(taco.getName())
-				.ingredients(taco.getIngredients())
-				.build();
-		
-		tacoOrder.addTaco(tacoUDT);
+		tacoOrder.addTaco(taco);
 
 		if (errors.hasErrors()) {
 			return "design";

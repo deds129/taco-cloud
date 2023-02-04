@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#create doker network for cassandra
+#create docker network for cassandra
 docker network create cassandra-net
 
 #run cassandra with 1 cluster in post 9042

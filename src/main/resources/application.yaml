@@ -1,8 +1,9 @@
 spring:
-  cassandra:
-    keyspace-name: tacocloud
-    local-datacenter: datacenter1
-    schema-action: create_if_not_exists
-    connection:
-      connect-timeout: 10s
-      init-query-timeout: 10s
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: rootuser
+      password: rootpwd
+      database: tacoclouddb
+      authentication-database: admin
