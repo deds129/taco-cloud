@@ -16,15 +16,9 @@ create table if not exists Taco
     id             bigint primary key not null,
     taco_name      varchar(50) not null,
     taco_order     bigint      not null references Taco_Order(id),
-    taco_order_key bigint      not null,
     created_at     timestamp   not null
 );
-create table if not exists Ingredient_Ref
-(
-    ingredient varchar(4) not null references Ingredient (id),
-    taco       bigint     not null,
-    taco_key   bigint     not null
-);
+
 create table if not exists Ingredient
 (
     id   varchar(4)  primary key not null,

@@ -21,7 +21,6 @@ import java.util.List;
 public class Taco {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	
@@ -30,14 +29,18 @@ public class Taco {
 	@Column(name = "taco_name")
 	private String name;
 	
-	@Column(name = "created_at")
 	private Date createdAt = new Date();
 	
+	@ManyToMany(targetEntity=Ingredient.class)
 	@Size(min=1, message="You must choose at least 1 ingredient")
-	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Ingredient> ingredients = new ArrayList<>();
 	
 	public void addIngredient(Ingredient ingredient) {
 		this.ingredients.add(ingredient);
+	}
+
+	@PrePersist
+	void createdAt() {
+		this.createdAt = new Date();
 	}
 }

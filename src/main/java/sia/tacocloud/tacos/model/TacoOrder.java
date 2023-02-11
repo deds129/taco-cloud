@@ -16,17 +16,18 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @Entity
-@Table(name = "taco_order")
+@Table
 public class TacoOrder implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private String id;
+
+	@ManyToOne
+	private User user;
 	
-	@Column(name = "placed_at")
 	private Date placedAt = new Date();
 	
 	@NotBlank(message="Delivery name is required")
@@ -70,10 +71,15 @@ public class TacoOrder implements Serializable {
 	@Column(name = "cc_cvv")
 	private String ccCVV;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+	@ManyToMany(targetEntity=Taco.class)
 	private List<Taco> tacos = new ArrayList<>();
 	
 	public void addTaco(Taco taco) {
 		this.tacos.add(taco);
+	}
+
+	@PrePersist
+	void placedAt() {
+		this.placedAt = new Date();
 	}
 }

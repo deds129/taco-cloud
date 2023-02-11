@@ -16,19 +16,29 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 @RequiredArgsConstructor
-@Table
+@Table(name = "usr")
 public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	
 	private final String username;
+	
 	private final String password;
+	
 	private final String fullname;
+	
 	private final String street;
+	
 	private final String city;
+	
 	private final String state;
+	
 	private final String zip;
+	
 	private final String phoneNumber;
 
 	@Override
