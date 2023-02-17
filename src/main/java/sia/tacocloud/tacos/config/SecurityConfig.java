@@ -15,7 +15,7 @@ import sia.tacocloud.tacos.repository.UserRepository;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -35,11 +35,14 @@ public class SecurityConfig {
 		return http
 				.authorizeHttpRequests()
 				.requestMatchers("/design", "/orders")
-					.hasRole("USER")
+				.hasRole("USER")
 				.requestMatchers("/", "/**").permitAll()
 				.and()
+				.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/design")
+				.and()
 				.build();
-				
 	}
-	
+
 }
