@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @Entity
-@Table
+@Table(name="taco_order")
 public class TacoOrder implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
