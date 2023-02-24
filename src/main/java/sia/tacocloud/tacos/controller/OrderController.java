@@ -18,19 +18,38 @@ import sia.tacocloud.tacos.repository.OrderRepository;
 @Slf4j
 @Controller
 @RequestMapping("/orders")
-@SessionAttributes("tacoOrder")
+@SessionAttributes("order")
+//@ConfigurationProperties(prefix="taco.orders")
 public class OrderController {
 
 	private final OrderRepository orderRepo;
 	
+	private int pageSize = 20;
+	
+	
 	public OrderController(OrderRepository orderRepo) {
 		this.orderRepo = orderRepo;
+	}
+	
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 	
 	@GetMapping("/current")
 	public String orderForm() {
 		return "orderForm";
 	}
+
+	/*
+	@GetMapping
+	public String ordersForUser(
+			@AuthenticationPrincipal User user, Model model) {
+		Pageable pageable = PageRequest.of(0, pageSize);
+		model.addAttribute("orders",
+				orderRepo.findByUserOrderByPlacedAtDesc(user, pageable));
+		return "orderList";
+	}
+	 */
 
 	@PostMapping
 	public String processOrder(@Valid TacoOrder order, Errors errors,

@@ -3,7 +3,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
     generate-ddl: true
 server:
   port: 8080
+  
+taco:
+  orders:
+    pageSize: 10
