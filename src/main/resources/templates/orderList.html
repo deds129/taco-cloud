@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Order List</title>
+	<link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<br>
+<table>
+	<tr th:each="order : ${orders}">
+		<td th:utext="${order.id}">ID</td>
+		<td th:utext="${order.user.fullname}">USER</td>
+		<td th:utext="${order.placedAt}"></td>
+	</tr>
+</table>
+<br>
+</body>
+</html>

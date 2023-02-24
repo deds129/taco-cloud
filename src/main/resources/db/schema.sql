@@ -25,3 +25,10 @@ create table if not exists Ingredient
     ingredient_name varchar(25) not null,
     ingredient_type varchar(10) not null
 );
+
+
+create table user_role
+(
+    user_id int8 primary key not null,
+    roles   varchar(2048)
+);

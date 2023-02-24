@@ -36,14 +36,15 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests()
-				.requestMatchers("/design", "/orders")
+				.requestMatchers("/design", "/orders", "/orders/**")
 				.hasRole("USER")
 				.requestMatchers("/", "/**").permitAll()
 				.and()
 				.formLogin()
 				.loginPage("/login")
-				.defaultSuccessUrl("/design")
+				//.defaultSuccessUrl("/design")
 				.and()
+				.csrf().disable()
 				.build();
 	}
 

@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,11 +20,13 @@ import java.util.List;
 @Table(name="taco_order")
 public class TacoOrder implements Serializable {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	@ManyToOne
 	private User user;

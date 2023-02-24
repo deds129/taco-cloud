@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
@@ -41,9 +40,14 @@ public class User implements UserDetails {
 	
 	private final String phoneNumber;
 
+	@ElementCollection(targetClass =  Role.class, fetch = FetchType.EAGER)
+	@CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
+	@Enumerated(EnumType.STRING)
+	private Set<Role> roles;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+		return getRoles();
 	}
 
 	@Override
