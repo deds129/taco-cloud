@@ -3,14 +3,16 @@ package sia.tacocloud.tacos.config;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import sia.tacocloud.tacos.model.Ingredient;
+import sia.tacocloud.tacos.model.Ingredient.Type;
 import sia.tacocloud.tacos.repository.IngredientRepository;
-import  sia.tacocloud.tacos.model.Ingredient.Type;
 
 @Configuration
 public class AppConfig {
 
 	@Bean
+	@Profile({"dev"})
 	public ApplicationRunner dataLoader(IngredientRepository repo) {
 		return args -> {
 			repo.save(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
