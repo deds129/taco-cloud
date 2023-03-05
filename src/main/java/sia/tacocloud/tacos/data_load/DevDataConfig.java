@@ -1,4 +1,4 @@
-package sia.tacocloud.tacos.config;
+package sia.tacocloud.tacos.data_load;
 
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import sia.tacocloud.tacos.model.Ingredient.Type;
 import sia.tacocloud.tacos.repository.IngredientRepository;
 
 @Configuration
-public class AppConfig {
+public class DevDataConfig {
 
 	@Bean
 	@Profile({"dev"})

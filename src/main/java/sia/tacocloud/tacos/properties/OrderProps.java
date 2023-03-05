@@ -1,4 +1,4 @@
-package sia.tacocloud.tacos.config;
+package sia.tacocloud.tacos.properties;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
