@@ -2,7 +2,9 @@ package sia.tacocloud.tacos.api;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sia.tacocloud.tacos.model.Taco;
 import sia.tacocloud.tacos.model.TacoOrder;
 import sia.tacocloud.tacos.repository.OrderRepository;
 
@@ -59,11 +61,12 @@ public class OrderController {
 
 	@DeleteMapping("/{orderId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteOrder(@PathVariable("orderId") Long orderId) {
+	public ResponseEntity<Taco> deleteOrder(@PathVariable("orderId") Long orderId) {
 		try {
 			orderRepository.deleteById(orderId);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (EmptyResultDataAccessException e) {
-			
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
 	}
 }
