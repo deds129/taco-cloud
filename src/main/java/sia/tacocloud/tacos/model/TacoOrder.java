@@ -74,7 +74,7 @@ public class TacoOrder implements Serializable {
 	@Column(name = "cc_cvv")
 	private String ccCVV;
 
-	@ManyToMany(targetEntity=Taco.class)
+	@ManyToMany(targetEntity=Taco.class, cascade = CascadeType.PERSIST)
 	private List<Taco> tacos = new ArrayList<>();
 	
 	public void addTaco(Taco taco) {

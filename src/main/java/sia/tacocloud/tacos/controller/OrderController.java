@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import sia.tacocloud.tacos.config.OrderProps;
+import sia.tacocloud.tacos.properties.OrderProps;
 import sia.tacocloud.tacos.model.TacoOrder;
 import sia.tacocloud.tacos.model.User;
 import sia.tacocloud.tacos.repository.OrderRepository;
@@ -30,7 +30,6 @@ public class OrderController {
 		this.orderRepo = orderRepo;
 		this.orderProps = orderProps;
 	}
-
 
 	@GetMapping("/current")
 	public String orderForm(@AuthenticationPrincipal User user,
@@ -58,8 +57,9 @@ public class OrderController {
 	public String ordersForUser(
 			@AuthenticationPrincipal User user, Model model) {
 		Pageable pageable = PageRequest.of(0, orderProps.getPageSize());
-		model.addAttribute("orders", 
+		model.addAttribute("orders",
 				orderRepo.findByUserOrderByPlacedAtDesc(user, pageable));
+
 		return "orderList";
 	}
 
@@ -67,12 +67,16 @@ public class OrderController {
 	public String processOrder(@Valid TacoOrder order, Errors errors,
 							   SessionStatus sessionStatus,
 							   @AuthenticationPrincipal User user) {
+
 		if (errors.hasErrors()) {
 			return "orderForm";
 		}
+
 		order.setUser(user);
+
 		orderRepo.save(order);
 		sessionStatus.setComplete();
+
 		return "redirect:/";
 	}
 }
