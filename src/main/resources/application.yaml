@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: dev
+
+  data:
+    rest:
+      base-path: /data-api
   
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
